@@ -3,7 +3,7 @@ Some useful information related with Go.
 ## Basic data type
 | Type | Range | Default / Note | 
 |------|------|------|------|
-| int  | 32 / 64 bit, depends on system. | 0 |
+| int  | 32 / 64 bit, depends on system. | 1 |
 | uint  | 32 / 64 bit, depends on system. | 0 |
 |int8 / byte   | -128 to 127 | 0 |
 | int16        | -32,768 to 32,767 | 0 |
