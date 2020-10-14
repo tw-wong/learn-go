@@ -1,20 +1,20 @@
 # learn-go
 Some useful information related with Go.
 ## Basic data type
-| Type | Range | Default / Note | 
-|------|------|------|------|
-| int  | 32 / 64 bit, depends on system. | 0 |
-| uint  | 32 / 64 bit, depends on system. | 0 |
-|int8 / byte   | -128 to 127 | 0 |
-| int16        | -32,768 to 32,767 | 0 |
-| int32 / rune | -2,147,483,648 to 2,147,483,647 | 0 |
-| int64        | -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807   | 0 |
-| uint8        | 0 to 255 | 0 |
-| uint16       | 0 to 65,535 | 0 |
-| uint32       | 0 to 4,294,967,295 | 0 |
-| uint64       | 0 to 18,446,744,073,709,551,615 | 0 |
-| float32      | -3.4E+38 to +3.4E+38 | 0 / about 7 decimal digits |
-| float64      | -1.7E+308 to +1.7E+308 | 0 / about 16 decimal digits |
+| Type | Range | Note | 
+|------|------|------|
+| int  | 32 / 64 bit, depends on system. |  |
+| uint  | 32 / 64 bit, depends on system. |  |
+|int8 / byte   | -128 to 127 |  |
+| int16        | -32,768 to 32,767 |  |
+| int32 / rune | -2,147,483,648 to 2,147,483,647 |  |
+| int64        | -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807   |  |
+| uint8        | 0 to 255 |  |
+| uint16       | 0 to 65,535 |  |
+| uint32       | 0 to 4,294,967,295 |  |
+| uint64       | 0 to 18,446,744,073,709,551,615 |  |
+| float32      | -3.4E+38 to +3.4E+38 | about 7 decimal digits. |
+| float64      | -1.7E+308 to +1.7E+308 | about 16 decimal digits. |
 
 Refs: https://golang.org/pkg/builtin/
 
