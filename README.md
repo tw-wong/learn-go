@@ -191,6 +191,44 @@ func main() {
 * Iteration order is not specified and is not guaranteed to be the same from one iteration to the next.
 
 ## New
+```golang
+package main
+
+import "fmt"
+
+type Person struct {
+	name string
+	age int
+}
+
+func main() {
+	p := new(Person)
+	fmt.Println(p) //&{ 0}
+	
+	p.name = "Vincent"	
+	fmt.Println(p) //&{Vincent 20}
+}
+
+```
+* Syntax is `new(T)`.
+* It returns a pointer to a newly allocated zero value of type T.
+* Refs: https://golang.org/doc/effective_go.html#allocation_new
+
+## Make
+```golang
+package main
+
+import "fmt"
+
+func main() {
+	v := make([]int, 10)
+	fmt.Println(v) //[0 0 0 0 0 0 0 0 0 0]
+}
+
+```
+* Syntax is `make(T, args)`.
+* It creates slices, maps, and channels only, and it returns an initialized (not zeroed) value of type T (not pointer).
+* Refs: https://golang.org/doc/effective_go.html#allocation_make
 
 ## ()
 
