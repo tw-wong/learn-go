@@ -161,6 +161,34 @@ func printSlice(s []string) {
 * Use builtin `append`, which returns a slice containing one or more new values.
 
 ## Map
+```golang
+package main
+
+import "fmt"
+
+type Person struct {
+	name string
+	age int
+}
+
+var m map[string]Person
+
+func main() {
+    m = make(map[string]Person)
+	m["first_person"] = Person{
+		name: "Alice", 
+		age: 19, 
+	}
+
+	fmt.Println(m) //map[first_person:{Alice 19}]
+	fmt.Println(m["first_person"].name) //Alice
+
+}
+
+```
+* To initialize a map, use the built in `make` function.
+* Maps are not safe for concurrent use.
+* Iteration order is not specified and is not guaranteed to be the same from one iteration to the next.
 
 ## New
 
