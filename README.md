@@ -58,8 +58,107 @@ fmt.Printf("%v is of type %T", name, name)
 * `%T` represents the type for the named value.
 
 ## Array
+```golang
+// declares an array with int type and its length with 5.
+var a [5]int
+fmt.Println(a)
+//[0 0 0 0 0]
+
+// declares an array with string type and its length with 2.
+var b [2]string
+b[0] = "Hello"
+b[1] = "World"
+fmt.Println(b)
+//[Hello World]
+
+c := [3]int{}
+fmt.Println(c)
+//[0 0 0]
+
+d := [3]int{1, 3, 5}
+fmt.Println(d)
+//[1 3 5]
+```
+* An array's length is part of its type, so arrays cannot be resized.
 
 ## Slice
+```golang
+    // Case 01:
+	primes := [6]int{2, 3, 5, 7, 11, 13}
+
+    var s []int = primes[1:4]
+    fmt.Println(s)
+    //[3, 5, 7]
+    
+    // Case 02:
+    names := [2]string{
+		"John",
+        "Paul",
+    }
+    fmt.Println(names)
+    // [John Paul]
+    
+    // declares a slice variable
+    a := names[0:2]
+    fmt.Println(a)
+    // [John Paul]
+    
+    names[1] = "Doe"
+    fmt.Println(a)
+    // [John Doe]
+
+```
+* Slice does not store any data, it is a reference.
+
+```golang
+package main
+
+import "fmt"
+
+func main() {
+    // Case 01:
+    s := make([]string, 3)
+    fmt.Println("emp:", s) // emp: [  ]    
+    
+    s[0] = "a"
+    s[1] = "b"
+    s[2] = "c"
+    fmt.Println("set:", s) // set: [a b c]
+    fmt.Println("get:", s[2]) // get: c	        
+    
+    printSlice(s) // len=3 cap=3 [a b c]
+    
+    s = append(s, "d")
+    s = append(s, "e", "f")
+    fmt.Println("apd:", s) // apd: [a b c d e f]
+    
+    printSlice(s) // len=6 cap=6 [a b c d e f]
+    
+    // Case 02:
+    c := make([]string, len(s))
+    copy(c, s) // copy c from s
+    fmt.Println("cpy:", c) // cpy: [a b c d e f]
+    
+    // this gets a slice of the elements s[2], s[3], and s[4].
+	l := s[2:5]
+    fmt.Println("sl1:", l) // sl1: [c d e]
+    
+    // this slices up to (but excluding) s[5].
+	l = s[:5]
+    fmt.Println("sl2:", l) // sl2: [a b c d e]
+    
+    // this slices up from (and including) s[2].
+    l = s[2:]
+    fmt.Println("sl3:", l) // sl3: [c d e f]    
+
+}
+
+func printSlice(s []string) {
+	fmt.Printf("len=%d cap=%d %v\n", len(s), cap(s), s)
+}
+```
+* Create an empty slice with non-zero length, use the builtin `make`.
+* Use builtin `append`, which returns a slice containing one or more new values.
 
 ## Map
 
