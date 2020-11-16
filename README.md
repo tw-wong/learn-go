@@ -229,7 +229,7 @@ func main() {
 * It creates slices, maps, and channels only, and it returns an initialized (not zeroed) value of type T (not pointer).
 * Refs: https://golang.org/doc/effective_go.html#allocation_make
 
-## Type assertions ()
+## Type assertions
 ```golang
 package main
 
