@@ -252,6 +252,76 @@ func main() {
 * Syntax `t := i.(T)`. It will trigger panic if `i` does not hold a `T` (type).
 
 ## Pointer
+```golang
+package main
+
+import "fmt"
+
+func zero(xPtr *int) {
+  *xPtr = 0
+}
+
+func main() {
+    x := 5
+    zero(&x)
+    fmt.Println(x) // x is 0
+}
+```
+
+```golang
+package main
+
+import "fmt"
+
+func main() {
+	i, j := 42, 2701
+
+    p := &i         // point to i.
+    fmt.Println(p)  // read memory address of i. Output: 0xc00002c008
+	fmt.Println(*p) // read i through the pointer. Output: 42
+	*p = 21         // set i through the pointer. i changed from 42 to 21 now.
+	fmt.Println(i)  // see the new value of i. Output: 21
+
+	p = &j         // point to j.
+	*p = *p / 37   // divide j through the pointer. 2701 / 37 = 73.
+	fmt.Println(j) // see the new value of j. Output: 73.
+}
+```
+
+```golang
+package main
+
+import "fmt"
+
+func main() {
+	var intVar int
+	var pointerVar *int
+	var pointerToPointerVar **int
+
+	intVar = 100
+	pointerVar = &intVar
+	pointerToPointerVar = &pointerVar
+
+	fmt.Println("Group 01")
+	fmt.Println("intVar: ", intVar)                                 //100
+	fmt.Println("pointerVar: ", pointerVar)                         //0xc00002c008
+	fmt.Println("pointerToPointerVar: ", pointerToPointerVar)       //0xc00000e028
+
+	fmt.Println("Group 02")
+	fmt.Println("&intVar: ", &intVar)                               //0xc00002c008
+    fmt.Println("&pointerVar: ", &pointerVar)                       //0xc00000e028
+    fmt.Println("&pointerToPointerVar: ", &pointerToPointerVar)     //0xc00000e030
+
+    fmt.Println("Group 03")
+    fmt.Println("*pointerVar: ", *pointerVar)                       //100
+    fmt.Println("*pointerToPointerVar: ", *pointerToPointerVar)     //0xc00002c008
+    fmt.Println("**pointerToPointerVar: ", **pointerToPointerVar)   //100
+}
+```
+
+* `*` operator uses to "dereference" pointer variable. Dereference a pointer gives us to access to the value of the pointer.
+* Example: `*xPtr = 0`, it means "store the `int` 0 in the memory location `*xPtr` refers to.
+* `&` operator uses to find the memory address of variable.
 
 ## Custom error
 ```golang
