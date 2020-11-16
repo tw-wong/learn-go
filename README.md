@@ -224,13 +224,32 @@ func main() {
 	v := make([]int, 10)
 	fmt.Println(v) //[0 0 0 0 0 0 0 0 0 0]
 }
-
 ```
 * Syntax is `make(T, args)`.
 * It creates slices, maps, and channels only, and it returns an initialized (not zeroed) value of type T (not pointer).
 * Refs: https://golang.org/doc/effective_go.html#allocation_make
 
-## ()
+## Type assertions ()
+```golang
+package main
+
+import "fmt"
+
+func main() {
+	var i interface{} = "hello"
+
+	s := i.(string)
+	fmt.Println(s) //hello
+
+	s, ok := i.(string)
+	fmt.Println(s, ok) //hello true
+
+	f, ok := i.(float64)
+    fmt.Println(f, ok) //0 false
+```
+
+* Syntax `t, ok := i.(T)`. It will not trigger panic if `i` does not hold a `T` (type).
+* Syntax `t := i.(T)`. It will trigger panic if `i` does not hold a `T` (type).
 
 ## Pointer
 
