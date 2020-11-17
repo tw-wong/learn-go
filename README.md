@@ -413,5 +413,76 @@ Returned normally from f. Note: This is return because panic has recovered in f.
 ```
 
 ## Struct
+```golang
+package animals
+
+// Dog represents information about dogs.
+type Dog struct {
+	Name         string
+	BarkStrength int
+	age          int
+}
+```
+
+```golang
+package main
+
+import (
+	"fmt"
+	"test/animals"
+)
+
+func main() {
+	// Create an object of type Dog from the animals package.
+	// This will NOT compile.
+	dog := animals.Dog{
+		Name:         "Bingo",
+		BarkStrength: 10,
+		age:          5,
+	}
+
+	fmt.Printf("Counter: %#v\n", dog) //Output: unknown animal.Dog field ‘age’ in struct literal
+
+}
+```
+* If a field or method name starts with a capital letter, the member is exported and is accessible outside of the package. 
+* If a field or method starts with a lowercase letter, the member is unexported and does not have accessibility outside of the package.
+
+```golang
+package main
+
+import "fmt"
+
+type Person struct {
+    Name string
+    Age int
+}
+
+func main() {
+    p := Person{
+        Name: "John",
+        Age: 19,
+    }
+	
+    fmt.Println(p) //Output: {John 19}
+    
+    p.Name = "John Doe"
+    p.Age = 20
+    fmt.Println(p) //Output: {John Doe 20}
+    
+    ptr := &Person {
+        Name: "Pointer", 
+        Age: 25, 
+    }
+    ptr.Age = 28
+    fmt.Println(ptr) //Output: &{Pointer 28}
+    fmt.Println(ptr.Age) //Output: 28
+}
+```
+* To use pointer to a `Struct`, use `&` operator. Ex: `&Person`.
+* It allows to access the fields without any dereferencing it explicitly. Ex: `ptr.Age`.
+* Golang allows the programmers to access the fields of a structure using the pointers without any dereferencing explicitly. 
+
+## Methods 
 
 ## Interface
