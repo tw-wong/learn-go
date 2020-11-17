@@ -23,14 +23,14 @@ Refs: https://golang.org/pkg/builtin/
 package main
 
 import (
-	"fmt"
+    "fmt"
 )
 
 func main() {
-	var f float64 = 3.9
-	c := uint(f)
-	fmt.Println(f) //3.9
-	fmt.Println(c) //3
+    var f float64 = 3.9
+    c := uint(f)
+    fmt.Println(f) //3.9
+    fmt.Println(c) //3
 }
 
 // Output:
@@ -84,7 +84,7 @@ fmt.Println(d)
 ## Slice
 ```golang
     // Case 01:
-	primes := [6]int{2, 3, 5, 7, 11, 13}
+    primes := [6]int{2, 3, 5, 7, 11, 13}
 
     var s []int = primes[1:4]
     fmt.Println(s)
@@ -92,7 +92,7 @@ fmt.Println(d)
     
     // Case 02:
     names := [2]string{
-		"John",
+        "John",
         "Paul",
     }
     fmt.Println(names)
@@ -140,11 +140,11 @@ func main() {
     fmt.Println("cpy:", c) // cpy: [a b c d e f]
     
     // this gets a slice of the elements s[2], s[3], and s[4].
-	l := s[2:5]
+    l := s[2:5]
     fmt.Println("sl1:", l) // sl1: [c d e]
     
     // this slices up to (but excluding) s[5].
-	l = s[:5]
+    l = s[:5]
     fmt.Println("sl2:", l) // sl2: [a b c d e]
     
     // this slices up from (and including) s[2].
@@ -154,7 +154,7 @@ func main() {
 }
 
 func printSlice(s []string) {
-	fmt.Printf("len=%d cap=%d %v\n", len(s), cap(s), s)
+    fmt.Printf("len=%d cap=%d %v\n", len(s), cap(s), s)
 }
 ```
 * Create an empty slice with non-zero length, use the builtin `make`.
@@ -167,24 +167,23 @@ package main
 import "fmt"
 
 type Person struct {
-	name string
-	age int
+    name string
+    age int
 }
 
 var m map[string]Person
 
 func main() {
     m = make(map[string]Person)
-	m["first_person"] = Person{
-		name: "Alice", 
-		age: 19, 
-	}
+    m["first_person"] = Person{
+        name: "Alice", 
+        age: 19, 
+    }
 
-	fmt.Println(m) //map[first_person:{Alice 19}]
-	fmt.Println(m["first_person"].name) //Alice
+    fmt.Println(m) //map[first_person:{Alice 19}]
+    fmt.Println(m["first_person"].name) //Alice
 
 }
-
 ```
 * To initialize a map, use the built in `make` function.
 * Maps are not safe for concurrent use.
@@ -197,16 +196,16 @@ package main
 import "fmt"
 
 type Person struct {
-	name string
-	age int
+    name string
+    age int
 }
 
 func main() {
-	p := new(Person)
-	fmt.Println(p) //&{ 0}
-	
-	p.name = "Vincent"	
-	fmt.Println(p) //&{Vincent 20}
+    p := new(Person)
+    fmt.Println(p) //&{ 0}
+
+    p.name = "Vincent"	
+    fmt.Println(p) //&{Vincent 20}
 }
 
 ```
@@ -221,8 +220,8 @@ package main
 import "fmt"
 
 func main() {
-	v := make([]int, 10)
-	fmt.Println(v) //[0 0 0 0 0 0 0 0 0 0]
+    v := make([]int, 10)
+    fmt.Println(v) //[0 0 0 0 0 0 0 0 0 0]
 }
 ```
 * Syntax is `make(T, args)`.
@@ -236,16 +235,17 @@ package main
 import "fmt"
 
 func main() {
-	var i interface{} = "hello"
+    var i interface{} = "hello"
 
-	s := i.(string)
-	fmt.Println(s) //hello
+    s := i.(string)
+    fmt.Println(s) //hello
 
-	s, ok := i.(string)
-	fmt.Println(s, ok) //hello true
+    s, ok := i.(string)
+    fmt.Println(s, ok) //hello true
 
-	f, ok := i.(float64)
+    f, ok := i.(float64)
     fmt.Println(f, ok) //0 false
+}
 ```
 
 * Syntax `t, ok := i.(T)`. It will not trigger panic if `i` does not hold a `T` (type).
@@ -258,7 +258,7 @@ package main
 import "fmt"
 
 func zero(xPtr *int) {
-  *xPtr = 0
+    *xPtr = 0
 }
 
 func main() {
@@ -274,17 +274,17 @@ package main
 import "fmt"
 
 func main() {
-	i, j := 42, 2701
+    i, j := 42, 2701
 
     p := &i         // point to i.
     fmt.Println(p)  // read memory address of i. Output: 0xc00002c008
-	fmt.Println(*p) // read i through the pointer. Output: 42
-	*p = 21         // set i through the pointer. i changed from 42 to 21 now.
-	fmt.Println(i)  // see the new value of i. Output: 21
+    fmt.Println(*p) // read i through the pointer. Output: 42
+    *p = 21         // set i through the pointer. i changed from 42 to 21 now.
+    fmt.Println(i)  // see the new value of i. Output: 21
 
-	p = &j         // point to j.
-	*p = *p / 37   // divide j through the pointer. 2701 / 37 = 73.
-	fmt.Println(j) // see the new value of j. Output: 73.
+    p = &j         // point to j.
+    *p = *p / 37   // divide j through the pointer. 2701 / 37 = 73.
+    fmt.Println(j) // see the new value of j. Output: 73.
 }
 ```
 
@@ -335,7 +335,6 @@ import (
 
 type RequestError struct {
     StatusCode int
-
     Err error
 }
 
@@ -346,7 +345,7 @@ func (r *RequestError) Error() string {
 func doRequest() error {
     return &RequestError{
         StatusCode: 503,
-        Err:        errors.New("Service unavailable"),
+        Err: errors.New("Service unavailable"),
     }
 }
 
@@ -418,9 +417,9 @@ package animals
 
 // Dog represents information about dogs.
 type Dog struct {
-	Name         string
-	BarkStrength int
-	age          int
+    Name         string
+    BarkStrength int
+    age          int
 }
 ```
 
@@ -428,21 +427,20 @@ type Dog struct {
 package main
 
 import (
-	"fmt"
-	"test/animals"
+    "fmt"
+    "test/animals"
 )
 
 func main() {
-	// Create an object of type Dog from the animals package.
-	// This will NOT compile.
-	dog := animals.Dog{
-		Name:         "Bingo",
-		BarkStrength: 10,
-		age:          5,
-	}
+    // Create an object of type Dog from the animals package.
+    // This will NOT compile.
+    dog := animals.Dog{
+        Name: "Bingo",
+        BarkStrength: 10,
+        age: 5,
+    }
 
-	fmt.Printf("Counter: %#v\n", dog) //Output: unknown animal.Dog field ‘age’ in struct literal
-
+    fmt.Printf("Counter: %#v\n", dog) //Output: unknown animal.Dog field ‘age’ in struct literal
 }
 ```
 * If a field or method name starts with a capital letter, the member is exported and is accessible outside of the package. 
