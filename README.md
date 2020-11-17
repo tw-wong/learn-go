@@ -294,21 +294,21 @@ package main
 import "fmt"
 
 func main() {
-	var intVar int
-	var pointerVar *int
-	var pointerToPointerVar **int
+    var intVar int
+    var pointerVar *int
+    var pointerToPointerVar **int
 
-	intVar = 100
-	pointerVar = &intVar
-	pointerToPointerVar = &pointerVar
+    intVar = 100
+    pointerVar = &intVar
+    pointerToPointerVar = &pointerVar
 
-	fmt.Println("Group 01")
-	fmt.Println("intVar: ", intVar)                                 //100
-	fmt.Println("pointerVar: ", pointerVar)                         //0xc00002c008
-	fmt.Println("pointerToPointerVar: ", pointerToPointerVar)       //0xc00000e028
+    fmt.Println("Group 01")
+    fmt.Println("intVar: ", intVar)                                 //100
+    fmt.Println("pointerVar: ", pointerVar)                         //0xc00002c008
+    fmt.Println("pointerToPointerVar: ", pointerToPointerVar)       //0xc00000e028
 
-	fmt.Println("Group 02")
-	fmt.Println("&intVar: ", &intVar)                               //0xc00002c008
+    fmt.Println("Group 02")
+    fmt.Println("&intVar: ", &intVar)                               //0xc00002c008
     fmt.Println("&pointerVar: ", &pointerVar)                       //0xc00000e028
     fmt.Println("&pointerToPointerVar: ", &pointerToPointerVar)     //0xc00000e030
 
