@@ -1,5 +1,10 @@
 # learn-go
 Some useful information related with Go.
+
+## Overview
+1. [Basic data type] (#basic-data-type).
+2. [Type conversion] (#type-conversion).
+
 ## Basic data type
 | Type | Range | Note | 
 |------|------|------|
