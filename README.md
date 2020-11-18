@@ -481,6 +481,109 @@ func main() {
 * It allows to access the fields without any dereferencing it explicitly. Ex: `ptr.Age`.
 * Golang allows the programmers to access the fields of a structure using the pointers without any dereferencing explicitly. 
 
-## Methods 
+## Functions 
+```golang
+package main
+
+import "fmt"
+
+func plus(a int, b int) int {
+    return a + b
+}
+
+func main() {
+    res := plus(1, 2)
+    fmt.Println(res) //Output: 3
+}
+```
+* Call a function with `name(args)`.
+
+```golang
+package main
+
+import "fmt"
+
+func vals() (int, int) {
+    return 3, 7
+}
+
+func main() {
+    a, b := vals()
+    fmt.Println(a) //Output: 3
+    fmt.Println(b) //Output: 7
+}
+```
+* Multiple return values.
+
+```golang
+package main
+
+import "fmt"
+
+func sum(nums ...int) int {
+    total := 0
+    for _, num := range nums {
+        total += num
+    }
+    
+    return total
+}
+
+func main() {
+    amount_a := sum(10, 15, 20, 30)
+    fmt.Println(amount_a) //Output: 75
+    
+    args := []int{1,2,3,4,5}
+    amount_b := sum(args...)
+    fmt.Println(amount_b) //Output: 15
+}
+```
+* `Variadic functions` can be called with any number of trailing arguments. 
+
+```golang
+package main
+
+import "fmt"
+
+func update(i *int) {
+    *i++    
+}
+
+func main() {
+    a := 1
+    fmt.Println(a) //Output: 1
+    
+    update(&a)
+    fmt.Println(a) //Output: 2
+}
+```
+* Passing a pointer as function's argument (`&a`).
+
+```golang
+package main
+
+import "fmt"
+
+func intSeq() func() int {
+    i := 0
+    return func() int {
+        i++
+        return i
+    }
+}
+
+func main() {
+    nextInt := intSeq()
+    
+    fmt.Println(nextInt()) //Output: 1
+    fmt.Println(nextInt()) //Output: 2
+    fmt.Println(nextInt()) //Output: 3
+    
+    newInts := intSeq()
+    fmt.Println(newInts()) //Output: 1
+}
+```
+* `Anonymous functions` are useful when you want to define a function inline without having to name it.
+* Function `intSeq` returns another function, which defined anonymously in the body of `intSeq`. The returned function closes over the variable `i` to form a closure.
 
 ## Interface
