@@ -2,8 +2,21 @@
 Some useful information related with Go.
 
 ## Overview
-1. [Basic data type] (#basic-data-type).
-2. [Type conversion] (#type-conversion).
+* [Basic data type](#basic-data-type)
+* [Type conversion](#type-conversion)
+* [Formatting](#formatting)
+* [Array](#array)
+* [Slice](#slice)
+* [Map](#map)
+* [New](#new)
+* [Make](#make)
+* [Type assertions](#type-assertions)
+* [Pointer](#pointer)
+* [Custom error](#custom-error)
+* [Defer, Panic and Recover](#defer-panic-and-recover)
+* [Struct](#struct)
+* [Functions](#functions)
+* [Interface](#interface)
 
 ## Basic data type
 | Type | Range | Note | 
