@@ -17,6 +17,7 @@ Some useful information related with Go.
 * [Struct](#struct)
 * [Functions](#functions)
 * [Interface](#interface)
+* [Goroutines](#goroutines)
 
 ## Basic data type
 | Type | Range | Note | 
@@ -605,3 +606,70 @@ func main() {
 * Function `intSeq` returns another function, which defined anonymously in the body of `intSeq`. The returned function closes over the variable `i` to form a closure.
 
 ## Interface
+```golang
+package main
+
+import "fmt"
+
+// create an interface for staff
+type IStaff interface {
+    CalculateSalary() int
+}
+
+// create full time staff struct
+type FullTimeStaff struct {
+    empId int
+    basicPay int
+    allowance int
+}
+
+// create part time staff struct
+type PartTimeStaff struct {
+    empId int
+    hourRate int
+    workingHour int
+    workingDay int
+}
+
+// "implement" interface to full time staff struct
+func (f FullTimeStaff) CalculateSalary() int {
+    return f.basicPay + f.allowance
+}
+
+// "implement" interface to part time staff struct
+func (p PartTimeStaff) CalculateSalary() int {
+    return p.hourRate * p.workingHour * p.workingDay
+}
+
+// calculate total expense
+func totalExpense(s []IStaff) int {
+    expense := 0
+    for _, v := range s {
+        expense += v.CalculateSalary()
+    }
+    
+    return expense
+}
+
+func main() {
+    staff01 := FullTimeStaff{
+        empId: 1, 
+        basicPay: 2000, 
+        allowance: 50,        
+    }
+
+    staff02 := PartTimeStaff{
+        empId: 2, 
+        hourRate: 8, 
+        workingHour: 4, 
+        workingDay: 20, 
+    }
+
+    employees := []IStaff{staff01, staff02}
+    total := totalExpense(employees)
+    fmt.Printf("Total Expense Per Month is: $%d", total) //Output: Total Expense Per Month is: $2690
+}
+```
+* Pass in param of `totalExpense` is interface `[]IStaff`, easy to extend.
+
+## Goroutines
