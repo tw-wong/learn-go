@@ -809,3 +809,79 @@ func main() {
 * When struct with type `interface{}`, we can assign any type for it. Ex: `dog.Age = '3' (type is string)` or `dog.Age = 3 (type is int)`.
 
 ## Goroutines
+```golang
+package main
+
+import "fmt"
+
+func hello(c chan bool) {
+    fmt.Println("Hello world goroutine")
+    c <- true //send data to channel
+    
+}
+func main() {
+    c := make(chan bool)
+    go hello(c)
+    <- c //read / receive data from channel, but not use or store the data in any variable is legal.
+    fmt.Println("main function")
+    
+    // Output:
+    // Hello world goroutine
+    // main function
+}
+```
+* Goroutines allow functions or methods that run concurrently with other functions or methods.
+* Use channel to communicate with Goroutines.
+* When a data is sent to a channel, the control is blocked in the send statement until some other Goroutine reads from that channel.
+* When data is read from a channel, the read is blocked until some Goroutine writes data to that channel.
+* Refs: https://golangbot.com/goroutines/
+
+```golang
+package main
+
+import "fmt"
+
+func processA(w int, h int, ca chan int) {
+    sum := 0
+    sum = w * h
+    ca <- sum //send process result
+}
+
+func processB(a int, b int, cb chan int) {
+    sum := 0
+    sum = a + b
+    cb <- sum
+}
+
+func main() {
+    ca := make(chan int) //create channel for process a and will return process result.
+    cb := make(chan int) //create channel for process b and will return process result.
+    go processA(5, 6, ca)
+    go processB(5, 5, cb)
+    resultA, resultB := <- ca, <- cb
+    total := resultA + resultB
+    fmt.Println("Total is:", total) //Output: Total is: 40
+}
+```
+* Example of multiple Goroutines run separately.
+
+```golang
+package main
+
+import "fmt"
+
+func processA(w int, h int, ch chan <- int) {
+    sum := 0
+    sum = w * h
+    ch <- sum //send process result
+}
+
+func main() {
+    ch := make(chan int) //create channel for process a and will return process result.
+    go processA(5, 6, ch)
+    resultA := <- ch //read data from channel.
+    fmt.Println("Result A is:", resultA) //Output: Result A is: 30
+}
+```
+* `ch` is defined as bidirectional channel.
+* The `processA` function converts this channel (`ch chan <- int`) to a send only channel (unidirectional channel). So the channel is send only in this function.
