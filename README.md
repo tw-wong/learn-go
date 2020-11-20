@@ -763,5 +763,49 @@ func main() {
 * Interface with pointer receiver.  Ex: `func (f *FullTimeStaff) IssueBonus()`.
 * When the interface is using a value receiver, it works for both variables type (value or pointer). That's why `staff01.CalculateSalary()` can be executed without any issue when the variable type is pointer (`staff01 := &FullTimeStaff`).
 * When interface using pointer receiver, it only works for pointer variables type.
- 
+
+```golang
+package main
+
+import "fmt"
+
+// Define an interface as type
+type Dog struct {
+    Age interface{}
+}
+
+//Define a struct
+type Cat struct {
+}
+
+// pass an empty interface type as a function parameter:
+func Guess(t interface{}) {
+    switch t.(type) {
+	case Dog:
+	    fmt.Println("Dog type")
+	case Cat:
+	    fmt.Println("Cat type")
+	default:
+	    fmt.Println("Unknown type")
+    }
+}
+
+func main() {
+    dog := Dog{}
+    dog.Age = "3"
+    fmt.Printf("%#v %T\n", dog.Age, dog.Age) //Output: "3" string
+
+    dog.Age = 3
+    fmt.Printf("%#v %T\n", dog.Age, dog.Age) //Output: 3 int
+
+    cat := Cat{}
+
+    Guess(dog) //Output: Dog type
+    Guess(cat) //Output: Cat type
+    Guess(1)   //Output: Unknown type
+}
+```
+* `interface{}` is empty interface.
+* When struct with type `interface{}`, we can assign any type for it. Ex: `dog.Age = '3' (type is string)` or `dog.Age = 3 (type is int)`.
+
 ## Goroutines
