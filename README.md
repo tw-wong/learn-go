@@ -672,4 +672,96 @@ func main() {
 ```
 * Pass in param of `totalExpense` is interface `[]IStaff`, easy to extend.
 
+```golang
+package main
+
+import "fmt"
+
+type IStaff interface {
+    CalculateSalary() float32
+    IssueBonus()
+}
+
+// create full time staff struct
+type FullTimeStaff struct {
+    empId int
+    basicPay float32
+    allowance float32
+    bonus float32
+}
+
+// create part time staff struct
+type PartTimeStaff struct {
+    empId int
+    hourRate float32
+    workingHour int
+    workingDay int
+    bonus float32
+}
+
+// "implement" interface to full time staff struct with pointer receiver
+func (f *FullTimeStaff) IssueBonus() {
+    bonus := f.basicPay * 0.1
+    f.bonus = bonus
+}
+
+// "implement" interface to full time staff struct with value receiver
+func (f FullTimeStaff) CalculateSalary() float32 {
+    return f.basicPay + f.allowance + f.bonus
+}
+
+// "implement" interface to full time staff struct with pointer receiver
+func (p *PartTimeStaff) IssueBonus() {
+     monthlyHour := p.workingHour * p.workingDay
+     if monthlyHour >= 50 {
+          p.bonus = 10
+     } else {
+         p.bonus = 5
+     }
+}
+
+// "implement" interface to full time staff struct with value receiver
+func (p PartTimeStaff) CalculateSalary() float32 {
+     return (p.hourRate * float32(p.workingHour) * float32(p.workingDay)) + p.bonus
+}
+
+// calculate total expense
+func totalExpense(s []IStaff) float32 {
+    expense := float32(0)
+    for _, v := range s {
+        expense += v.CalculateSalary()
+    }
+    
+    return expense
+}
+
+func main() {
+    staff01 := &FullTimeStaff{
+        empId: 1, 
+        basicPay: 185, 
+        allowance: 50,        
+    }
+    staff01.IssueBonus()
+    staff01Salary := staff01.CalculateSalary()
+    fmt.Printf("staff01 salary is: $%.2f\n", staff01Salary) //Output: staff01 salary is: $253.50
+
+    staff02 := &PartTimeStaff{
+         empId: 2, 
+         hourRate: 8, 
+         workingHour: 4, 
+         workingDay: 20, 
+    }
+    staff02.IssueBonus()
+    staff02Salary := staff02.CalculateSalary()
+    fmt.Printf("staff02 salary is: $%.2f\n", staff02Salary) //Output: staff02 salary is: $650.00
+
+    employees := []IStaff{staff01, staff02}
+    total := totalExpense(employees)
+    fmt.Printf("Total Expense Per Month is: $%.2f", total) //Output: Total Expense Per Month is: $903.50
+}
+```
+* Interface with pointer receiver.  Ex: `func (f *FullTimeStaff) IssueBonus()`.
+* When the interface is using a value receiver, it works for both variables type (value or pointer). That's why `staff01.CalculateSalary()` can be executed without any issue when the variable type is pointer (`staff01 := &FullTimeStaff`).
+* When interface using pointer receiver, it only works for pointer variables type.
+ 
 ## Goroutines
