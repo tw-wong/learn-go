@@ -885,3 +885,5 @@ func main() {
 ```
 * `ch` is defined as bidirectional channel.
 * The `processA` function converts this channel (`ch chan <- int`) to a send only channel (unidirectional channel). So the channel is send only in this function.
+
+## Buffered channel
