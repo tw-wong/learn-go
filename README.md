@@ -18,6 +18,8 @@ Some useful information related with Go.
 * [Functions](#functions)
 * [Interface](#interface)
 * [Goroutines](#goroutines)
+* [Buffered channel](#buffered-channel)
+* [Go Modules](#go-modules)
 
 ## Basic data type
 | Type | Range | Note | 
@@ -887,3 +889,99 @@ func main() {
 * The `processA` function converts this channel (`ch chan <- int`) to a send only channel (unidirectional channel). So the channel is send only in this function.
 
 ## Buffered channel
+TODO
+
+## Go Modules
+* A module is a collection of Go packages stored in a file tree with a `go.mod` file at its root.
+
+* Initialize new module in current directory:
+
+```sh
+$ go mod init example.com/hello
+go: creating new go.mod: module example.com/hello
+
+.
+├── go.mod
+├── hello.go
+└── hello_test.go
+
+$ cat go.mod
+module example.com/hello
+
+go 1.12
+```
+ * Starting in Go 1.13, module mode will be the default for all development.
+
+ * `go` command automatically looks up the module containing that package and adds it to `go.mod`, using the latest version.
+
+* Command to list the current module and all its dependencies
+
+```sh
+$ go list -m all
+example.com/hello
+golang.org/x/text v0.0.0-20170915032832-14c0d48ead0c
+rsc.io/quote v1.5.2
+rsc.io/sampler v1.3.0
+```
+
+* The `golang.org/x/text` version `v0.0.0-20170915032832-14c0d48ead0c` is an example of a pseudo-version, which is the go command's version syntax for a specific untagged commit.
+
+* `go` command will auto generate `go.sum` and it is containing the expected cryptographic hashes of the content of specific module versions.
+
+* `go` command uses the `go.sum` file to ensure that future downloads of these modules retrieve the same bits as the first download, to ensure the modules our project depends on do not change unexpectedly, whether for malicious, accidental, or other reasons.
+
+* Both `go.mod` and `go.sum` should be checked into version control.
+
+* Type the command to upgrade dependency:
+
+```sh
+# check version
+$ go list -m all
+example.com/hello
+golang.org/x/text v0.0.0-20170915032832-14c0d48ead0c
+rsc.io/quote v1.5.2
+rsc.io/sampler v1.3.0
+
+# upgrade dependency (golang.org/x/text)
+$ go get golang.org/x/text
+go: finding golang.org/x/text v0.3.0
+go: downloading golang.org/x/text v0.3.0
+go: extracting golang.org/x/text v0.3.0
+
+# check version again, `golang.org/x/text` version has updated.
+$ go list -m all
+example.com/hello
+golang.org/x/text v0.3.0
+rsc.io/quote v1.5.2
+rsc.io/sampler v1.3.0
+
+# check go.mod, `golang.org/x/text` version has updated.
+$ cat go.mod
+module example.com/hello
+
+go 1.12
+
+require (
+    golang.org/x/text v0.3.0 // indirect
+    rsc.io/quote v1.5.2
+)
+```
+
+* The `indirect` comment indicates a dependency is not used directly by this module, only indirectly by other module dependencies.
+
+* The following command to list the available tagged versions of the module:
+
+```sh
+$ go list -m -versions rsc.io/sampler
+rsc.io/sampler v1.0.0 v1.2.0 v1.2.1 v1.3.0 v1.3.1 v1.99.99
+```
+
+* The following command will cleans up unused dependencies:
+
+```sh
+$ go mod tidy
+```
+* Refs:
+    * https://insujang.github.io/2020-04-04/go-modules/
+    * https://www.bogotobogo.com/GoLang/GoLang_Modules_1_Creating_a_new_module.php
+    * https://blog.golang.org/using-go-modules
