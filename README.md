@@ -20,6 +20,7 @@ Some useful information related with Go.
 * [Goroutines](#goroutines)
 * [Buffered channel](#buffered-channel)
 * [Go Modules](#go-modules)
+* [Go Modules V2](#go-modules-v2)
 
 ## Basic data type
 | Type | Range | Note | 
@@ -981,7 +982,91 @@ rsc.io/sampler v1.0.0 v1.2.0 v1.2.1 v1.3.0 v1.3.1 v1.99.99
 ```sh
 $ go mod tidy
 ```
+
+## Go Modules V2
+
+```sh
+# Init project to use Go Modules. (create go.mod)
+$ go mod init gitthub.com/tw-wong/go-modules
+go: creating new go.mod: module gitthub.com/tw-wong/go-modules
+$ ls
+go.mod
+
+# Install dependency (create go.sum, like package-lock.json)
+$ go get github.com/julienschmidt/httprouter
+go: downloading github.com/julienschmidt/httprouter v1.3.0
+go: github.com/julienschmidt/httprouter upgrade => v1.3.0
+$ ls 
+go.mod go.sum
+
+
+# Keyword `indirect` means we not using it
+$ cat go.mod
+module gitthub.com/tw-wong/go-modules
+
+go 1.14
+
+require github.com/julienschmidt/httprouter v1.3.0 // indirect
+
+# Remove unused dependencies, add required dependencies
+$ go mod tidy
+
+# use `why` to check if we need the dependency
+$ go mod why github.com/julienschmidt/httprouter
+# github.com/julienschmidt/httprouter
+(main module does not need package github.com/julienschmidt/httprouter)
+
+# get dependency whereby the latest version is either 0 or 1
+$ go get github.com/julienschmidt/httprouter@v1.3
+
+# get dependency by committed hash: fe77dd05ab5a80f54110cccf1b7d8681c2648323
+$ go get github.com/julienschmidt/httprouter@fe77dd05ab5a80f54110cccf1b7d8681c2648323
+
+# Only the latest version (up to v1.x) will be downloaded, even it the latest version is greather than 1.
+$ go get rsc.io/quote
+go: downloading rsc.io/quote v1.5.2
+go: rsc.io/quote upgrade => v1.5.2
+
+# Get the latest dependency whereby the latest version is greater than 1
+$ go get rsc.io/quote/v3
+go: downloading rsc.io/quote/v3 v3.1.0
+go: rsc.io/quote/v3 upgrade => v3.1.0
+
+# Method 1: way to download all dependencies when fresh clone the project
+# It will scan the entire project and download all the dependencies
+$ go get ./...
+
+# Method 2: way to download all dependencies when fresh clone the project
+# run either one of the command will be abled to download all the dependencies
+$ go run
+$ go build
+$ go test
+
+# Cache clean up
+$ go clean -cache -modcache -i -r
+
+# Check available vers
+$ go list -m -versions rsc.io/quote
+rsc.io/quote v0.9.9-pre1 v1.0.0 v1.1.0 v1.2.0 v1.2.1 v1.3.0 v1.4.0 v1.5.0 v1.5.1 v1.5.2 v1.5.3-pre1
+
+$ go list -m -versions rsc.io/quote/v3
+rsc.io/quote/v3 v3.0.0 v3.1.0
+
+# Method 3: way to download all dependencies (based on go.mod file).
+# It will not go through all the source code and get the dependencies
+$ go mod download
+
+# goproxy
+$ go env | grep "GOPROXY"
+GOPROXY="https://proxy.golang.org,direct"
+
+# gosumdb, checksum
+$ go env | grep "GOSUMDB"
+GOSUMDB="sum.golang.org"
+```
+
 * Refs:
     * https://insujang.github.io/2020-04-04/go-modules/
     * https://www.bogotobogo.com/GoLang/GoLang_Modules_1_Creating_a_new_module.php
     * https://blog.golang.org/using-go-modules
+    *  https://www.youtube.com/watch?v=Z1VhG7cf83M
