@@ -21,6 +21,7 @@ Some useful information related with Go.
 * [Buffered channel](#buffered-channel)
 * [Go Modules](#go-modules)
 * [Go Modules (updates)](#go-modules-updates)
+* [Testing](#testing)
 
 ## Basic data type
 | Type | Range | Note | 
@@ -1070,3 +1071,79 @@ GOSUMDB="sum.golang.org"
     * https://www.bogotobogo.com/GoLang/GoLang_Modules_1_Creating_a_new_module.php
     * https://blog.golang.org/using-go-modules
     *  https://www.youtube.com/watch?v=Z1VhG7cf83M
+    
+## Testing
+
+```golang
+// File: main.go
+
+package main
+
+import "fmt"
+
+func Calculate(x int) (result int) {
+	result = x + 2
+	return result
+}
+
+func main() {
+	result := Calculate(10)
+	fmt.Printf("Result is %v", result)
+	// Result is 12
+}
+
+// ###################
+// File: main_test.go
+package main
+
+import (
+	"testing"
+)
+
+func TestCalculate(t *testing.T) {
+	var tests = []struct {
+		input    int
+		expected int
+	}{
+		{2, 4},
+		{-1, 1},
+		{0, 2},
+		{-5, -3},
+		{99999, 100001},
+	}
+
+	for _, test := range tests {
+		if output := Calculate(test.input); output != test.expected {
+			t.Error("Test Failed: {} inputted, {} expected, recieved: {}", test.input, test.expected, output)
+		}
+	}
+}
+
+```
+
+```sh
+# Run test
+~ go test
+PASS
+ok  	github.com/tw-wong/test-go	0.126s
+
+# Run test in verbose
+~ go test -v
+=== RUN   TestCalculate
+--- PASS: TestCalculate (0.00s)
+PASS
+ok  	github.com/tw-wong/test-go	0.109s
+
+# Check coverage
+~ go test -cover
+PASS
+coverage: 50.0% of statements
+ok  	github.com/tw-wong/test-go	0.509s
+
+# Show coverage in HTML, a coverage.out file will be generated. 
+~ go test -coverprofile=coverage.out
+~ go tool cover -html=coverage.out
+```
+
+* Refs: 
+    * https://tutorialedge.net/golang/intro-testing-in-go/
