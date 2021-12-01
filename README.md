@@ -20,7 +20,7 @@ Some useful information related with Go.
 * [Goroutines](#goroutines)
 * [Buffered channel](#buffered-channel)
 * [Go Modules](#go-modules)
-* [Go Modules V2](#go-modules-v2)
+* [Go Modules (updates)](#go-modules-updates)
 
 ## Basic data type
 | Type | Range | Note | 
@@ -983,7 +983,7 @@ rsc.io/sampler v1.0.0 v1.2.0 v1.2.1 v1.3.0 v1.3.1 v1.99.99
 $ go mod tidy
 ```
 
-## Go Modules V2
+## Go Modules (updates)
 
 ```sh
 # Init project to use Go Modules. (create go.mod)
