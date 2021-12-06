@@ -22,7 +22,7 @@ libprotoc 3.17.3
 
 ## Run
 ```sh
-~ go run main.go protobuf/*.proto
+~ go run main.go
 Marshal data: [10 5 65 108 105 99 101 16 24 24 1]
 Print Person:
 - Age: 24
