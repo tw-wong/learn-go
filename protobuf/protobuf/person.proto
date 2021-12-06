@@ -1,0 +1,15 @@
+syntax="proto3";
+
+package protobuf;
+
+option go_package = "./gen";
+
+message Person {
+  string name = 1;
+  int32 age = 2;  
+  enum Gender {
+    MALE = 0;
+    FEMALE = 1;
+  }
+  Gender gender = 3;
+}
