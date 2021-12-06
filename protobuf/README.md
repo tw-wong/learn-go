@@ -11,12 +11,14 @@ libprotoc 3.17.3
 ## Download dependencies
 ```sh
 ~ go mod download
+~ go mod tidy
 ```
 
 # Compile Protobuf
 ```sh
 ~ protoc --go_out=. ./protobuf/*.proto
 ```
+- Generate *.pb.go files at "gen" directory.
 
 ## Run
 ```sh
