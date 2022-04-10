@@ -365,7 +365,8 @@ func main() {
 
 	revert := t.Format(layout)
 	// fmt.Println(time.Now().Format(time.RFC3339))
-	fmt.Printf("ori:%s, revert:%s, timestamp:%d", ori, revert, timestamp)
+	fmt.Printf("ori:%s, revert:%s, timestamp:%d", ori, revert, timestamp) // ori:2022-12-31T23:59:59.999Z, revert:2022-12-31T23:59:59Z, timestamp:1672531199999000000
+
 }
 ```
 
