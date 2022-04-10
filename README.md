@@ -12,6 +12,7 @@ Some useful information related with Go.
 * [Make](#make)
 * [Type assertions](#type-assertions)
 * [Pointer](#pointer)
+* [Time](#time)
 * [Custom error](#custom-error)
 * [Defer, Panic and Recover](#defer-panic-and-recover)
 * [Struct](#struct)
@@ -345,6 +346,32 @@ func main() {
 * `*` operator uses to "dereference" pointer variable. Dereference a pointer gives us to access to the value of the pointer.
 * Example: `*xPtr = 0`, it means "store the `int` 0 in the memory location `*xPtr` refers to.
 * `&` operator uses to find the memory address of variable.
+
+## Time
+```golang
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+const layout = time.RFC3339
+
+func main() {
+	ori := "2022-12-31T23:59:59.999Z"
+	t, _ := time.Parse(layout, ori)
+	timestamp := t.UnixNano()
+
+	revert := t.Format(layout)
+	// fmt.Println(time.Now().Format(time.RFC3339))
+	fmt.Printf("ori:%s, revert:%s, timestamp:%d", ori, revert, timestamp)
+}
+```
+
+* Convert string to time.
+* Convert time to timestamp.
+* Convert timestamp to time.
 
 ## Custom error
 ```golang
